@@ -1,0 +1,24 @@
+language: python
+
+branches:
+  only:
+  - master    # 需要编译的分支
+
+install:
+ - pip install sphinx # sphinx
+ - pip install recommonmark 
+ - pip install sphinx-rtd-theme
+
+script:
+ - make html
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN # github 上的token环境变量 #在网页上手动设置
+  local-dir: ./build/html # 根据情况自定义到静态文件输出目录，是main里的目录
+  target-branch: gh-pages
+  verbose: true
+  on:
+    branch: master #main提交时才会运行
+
