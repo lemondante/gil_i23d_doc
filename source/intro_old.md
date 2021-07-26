@@ -1,6 +1,4 @@
-# Graph Structure from Motion (GraphSfM)
-
-
+# Graph Structure from Motion (GraphSfM)(旧版文档v1.0)
 ## 1. Overview of GraphSfM
 Our Structure from Motion approach, named **`Graph Structure from Motion (GraphSfM)`**, is aimed at large scale 3D reconstruction. Besides, we aimed at exploring the computation ability of computer and making SfM easily transferred to distributed system. This work has been refactored, now it is based on [COLMAP](https://github.com/colmap/colmap). We have implemented the distributed version which is based on Map-Reduce architecture.
 
@@ -26,9 +24,7 @@ If you use this project for your research, please cite:
 ```
 
 ## 2. How to Build
-
 ### 2.1 Required
-
 #### Basic Requirements
 ```
 sudo apt-get install \
@@ -54,7 +50,6 @@ sudo apt-get install \
 ```
 
 #### [ceres-solver]()
-
 ```sh
 sudo apt-get install libatlas-base-dev libsuitesparse-dev
 git clone https://ceres-solver.googlesource.com/ceres-solver
@@ -68,7 +63,6 @@ sudo make install
 ```
 
 #### [rpclib](https://github.com/qchateau/rpclib)
-
 ```sh
 git clone https://github.com/qchateau/rpclib.git
 cd rpclib
@@ -78,7 +72,6 @@ make -j8
 sudo make install
 ```
 #### Build our GraphSfM
-
 ```sh
 git clone https://github.com/AIBluefisher/GraphSfM.git
 cd GraphSfM
@@ -87,7 +80,6 @@ cmake .. && make -j8
 ```
 
 ## 3. Usage
-
 As our algorithm is not integrated in the `GUI` of `COLMAP`, we offer a script to run the 
 distributed SfM (We hope there is anyone that is interested in integrating this pipeline into the GUI).
 
@@ -211,7 +203,6 @@ limit the image number of each small map, and use this parameter to segment larg
 - 'write_binary`: set to `1` if save colmap data in binary format, or set to `0` to save colmap data in text format.
 
 ## ChangeLog
-
 - 2020.04.11
     - Interface for extracting largest connected component in graph implementation.
     - Merge largest connected component in SfMAligner.
@@ -235,7 +226,6 @@ limit the image number of each small map, and use this parameter to segment larg
 
 
 ## Licence
-
 ```
 BSD 3-Clause License
 

@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'i23d_doc'
+project = 'i23d分布式三维重建系统'
 copyright = '2021, youweikang'
 author = 'youweikang'
 

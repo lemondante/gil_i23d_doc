@@ -3,15 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to i23d documentation!
+i23d分布式三维重建系统
 ====================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :titlesonly:
+   :caption: 目录:
 
-   intro.md
-
+   doc_intro.md
+   intro_new.md
+   versions.md
+   environment.md
+   util.md
+   intro_old.md
+   docker.md
 
 
 Indices and tables
