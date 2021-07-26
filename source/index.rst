@@ -8,6 +8,7 @@ i23d分布式三维重建系统
 
 .. toctree::
    :titlesonly:
+   :maxdepth: 2
    :caption: 目录:
 
    doc_intro.md
