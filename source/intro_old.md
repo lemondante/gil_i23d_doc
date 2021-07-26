@@ -102,7 +102,7 @@ cd build/src/exe
 
 (2) Then, the ip and port for every server should be written in a `config.txt` file.
 The file format should follow:
-```txt
+```
 server_num
 ip1 port1 image_path1
 ip2 port2 image_path2

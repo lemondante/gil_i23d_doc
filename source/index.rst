@@ -14,6 +14,8 @@ i23d分布式三维重建系统
    intro_new.md
    versions.md
    environment.md
+   build_i23d.md
+   use_i23d.md
    util.md
    intro_old.md
    docker.md
