@@ -1,6 +1,22 @@
 # 环境配置 
-本系统依赖的环境如下：
-## 基础环境
+
+## 配置要求
+
+| 环境           | 要求 |
+| ---           | --- |
+| 系统环境       | Ubuntu 18.04 |
+| GPU依赖        | Titan Xp或更高，Cuda>=9.0 |
+| 内存           |16G+，推荐64G+ |
+| gcc,g++	    | 6.0 |
+| OpenMVS	    |1.1 |
+| OpenCV	    |4.x |
+| python	    |3.6(pyTorch), 2.7(Tensorflow) |
+| pyTorch	    |>=1.0.0 |
+| Tensorflow	|>=1.4.0 |
+
+## 本系统依赖的环境如下：
+
+### 基础环境
 ```
 sudo apt-get install \
     git \
@@ -23,7 +39,9 @@ sudo apt-get install \
     libcgal-dev \
     libcgal-qt5-dev
 ```
-## [openMVS](https://github.com/cdcseacave/openMVS)
+
+### [openMVS](https://github.com/cdcseacave/openMVS)
+
 openMVS源码必须使用90服务器上改造后的源码，**原始github上的不能够读取分布式sfm的结果**。
 安装openMVS依赖库包括：
 + Eigen
@@ -40,7 +58,9 @@ trust_region_minimizer.cc:91] Terminating: Number of consecutive invalid steps m
 consecutive_invalid_steps: 5  
 ```
 必须切换为1.14.x版本再进行编译。
+
 **也可直接使用以下脚本命令一键部署环境。**
+
 ```
 #!/bin/bash
 #Prepare and empty machine for building:
@@ -82,7 +102,9 @@ cd ..
 #GLFW3 (Optional)
 sudo apt-get -y install freeglut3-dev libglew-dev libglfw3-dev
 ```
-在同一级目录下放入90服务器上的openMVS代码，并执行如下编译操作：
+
+**在同一级目录下放入90服务器上的openMVS代码，并执行如下编译操作：**
+
 ```
 mkdir openMVS_build && cd openMVS_build
 cmake . ../openMVS -DCMAKE_BUILD_TYPE=Release -DVCG_ROOT="$main_path/vcglib"

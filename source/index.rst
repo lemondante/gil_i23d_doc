@@ -10,15 +10,15 @@ i23d分布式三维重建系统
    :titlesonly:
    :caption: 目录:
 
-   doc_intro.md
-   intro_new.md
-   versions.md
-   environment.md
-   build_i23d.md
-   use_i23d.md
-   util.md
-   intro_old.md
-   docker.md
+   ./BasicIntro/doc_intro.md
+   ./BasicIntro/intro_new.md
+   ./BasicIntro/versions.md
+   ./GetStart/environment.md
+   ./GetStart/build_i23d.md
+   ./GetStart/use_i23d.md
+   ./SouceAnalysis/util.md
+   ./OldDocs/intro_old.md
+   ./OldDocs/docker.md
 
 
 Indices and tables

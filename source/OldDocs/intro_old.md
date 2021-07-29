@@ -1,5 +1,7 @@
 # Graph Structure from Motion (GraphSfM)(旧版文档v1.0)
+
 ## 1. Overview of GraphSfM
+
 Our Structure from Motion approach, named **`Graph Structure from Motion (GraphSfM)`**, is aimed at large scale 3D reconstruction. Besides, we aimed at exploring the computation ability of computer and making SfM easily transferred to distributed system. This work has been refactored, now it is based on [COLMAP](https://github.com/colmap/colmap). We have implemented the distributed version which is based on Map-Reduce architecture.
 
 In our work, 3D reconstruction is deemed as a ```divide-and-conquer``` problem. Our graph cluster algorithm divides images into different clusters, while images with high relativity remained in the same group. After the completion of local SfM in all clusters, an elaborate graph initialization and MST construction algorithm is designed to accurately merge clusters, and cope well with drift problems. The two proposed graph-based algorithms make SfM more efficient and robust - the graph cluster algorithm accelerate the SfM step while guarantee the robustness of clusters merging, and the MST construction makes point clouds alignment as accurate as possible. Our approach can reconstruct large scale data-set in one single machine with very high accuracy and efficiency.
@@ -24,9 +26,12 @@ If you use this project for your research, please cite:
 ```
 
 ## 2. How to Build
+
 ### 2.1 Required
+
 #### Basic Requirements
-```
+
+```sh
 sudo apt-get install \
     git \
     cmake \
@@ -50,6 +55,7 @@ sudo apt-get install \
 ```
 
 #### [ceres-solver]()
+
 ```sh
 sudo apt-get install libatlas-base-dev libsuitesparse-dev
 git clone https://ceres-solver.googlesource.com/ceres-solver
@@ -63,6 +69,7 @@ sudo make install
 ```
 
 #### [rpclib](https://github.com/qchateau/rpclib)
+
 ```sh
 git clone https://github.com/qchateau/rpclib.git
 cd rpclib
@@ -71,7 +78,9 @@ cmake ..
 make -j8
 sudo make install
 ```
+
 #### Build our GraphSfM
+
 ```sh
 git clone https://github.com/AIBluefisher/GraphSfM.git
 cd GraphSfM
@@ -80,10 +89,12 @@ cmake .. && make -j8
 ```
 
 ## 3. Usage
+
 As our algorithm is not integrated in the `GUI` of `COLMAP`, we offer a script to run the 
 distributed SfM (We hope there is anyone that is interested in integrating this pipeline into the GUI).
 
 ### Sequential Mode
+
 ```sh
 sudo chmod +x scripts/shell/distributed_sfm.sh
 ./distributed_sfm.sh $image_dir $num_images_ub $log_folder $completeness_ratio
@@ -94,6 +105,7 @@ sudo chmod +x scripts/shell/distributed_sfm.sh
 - ```$completeness_ratio```: The ratio that measure the repeatitive rate of adjacent clusters.
 
 ### Distributed Mode
+
 (1) At first, we need to establish the server for every worker: 
 ```sh
 cd build/src/exe
@@ -185,6 +197,7 @@ For small scale reconstruction, you can set the `$num_images_ub` equal to the nu
 For large scale reconstruction, our `GraphSfM` is highly recommended, these parameters should be tuned carefully: larger `$num_images_ub` and `$completeness_ratio` can make reconstruction more robust, but also may lead to low efficiency and even degenerate to incremental one.
 
 ### Segment large scale maps
+
 In some cases where we have a very large scale map, such that a latter Multi-View Stereo becomes
 infeasible because of memory limitation. We can use the `point_cloud_segmenter` to segment original
 map that is stored in colmap format into multiple small maps.
@@ -203,6 +216,7 @@ limit the image number of each small map, and use this parameter to segment larg
 - 'write_binary`: set to `1` if save colmap data in binary format, or set to `0` to save colmap data in text format.
 
 ## ChangeLog
+
 - 2020.04.11
     - Interface for extracting largest connected component in graph implementation.
     - Merge largest connected component in SfMAligner.
@@ -226,6 +240,7 @@ limit the image number of each small map, and use this parameter to segment larg
 
 
 ## Licence
+
 ```
 BSD 3-Clause License
 
