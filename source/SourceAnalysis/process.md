@@ -138,6 +138,8 @@ $DATASET_PATH/$log_folder \
 
 ### 2.提取最大联通分量
 
+并查集 小于100忽略
+
 ### 3.分割图N-cut
 
 ### 4.运行（sfm+MVS)
