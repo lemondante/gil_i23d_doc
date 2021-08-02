@@ -128,7 +128,24 @@ $DATASET_PATH/$log_folder \
 `distributed_mapper`主要调用了文件colmap.cc中的`RunDistributedMapper`函数，此函数接收的参数较多，以下是参数的含义：
 
 
-`RunDistributedMapper`函数接收了参数并存放到option中后，构建了两个类`ReconstructionManager`和`DistributedMapperController`，分别实例化了`reconstruction_manager`和`distributed_mapper`对象，其中`DistributedMapperController`类存放了控制信息，也就是option中的信息。
+`RunDistributedMapper`函数接收了参数并存放到option中后，构建了两个类`ReconstructionManager`和`DistributedMapperController`，分别实例化了`reconstruction_manager`和`distributed_mapper`对象，其中`DistributedMapperController`类存放了控制信息，也就是option中的信息。随后启动`distributed_mapper`函数。
 
+`distributed_mapper`函数主要有八个步骤。
+
+### 1.读取数据
+
+借助封装的函数`LoadData`用SQLite模块读取图片信息
+
+### 2.提取最大联通分量
+
+### 3.分割图N-cut
+
+### 4.运行（sfm+MVS)
+
+### 5.再次三角化
+
+### 6.全局BA
+
+### 7.提取颜色
 
 
