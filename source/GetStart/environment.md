@@ -2,17 +2,48 @@
 
 ## 配置要求
 
-| 环境           | 要求 |
-| ---           | --- |
-| 系统环境       | Ubuntu 18.04 |
-| GPU依赖        | Titan Xp或更高，Cuda>=9.0 |
-| 内存           |16G+，推荐64G+ |
-| gcc,g++	    | 6.0 |
-| OpenMVS	    |1.1 |
-| OpenCV	    |4.x |
-| python	    |3.6(pyTorch), 2.7(Tensorflow) |
-| pyTorch	    |>=1.0.0 |
-| Tensorflow	|>=1.4.0 |
+<table>
+<tr>
+<td>环境</td>
+<td>要求</td>
+</tr>
+<tr>
+<td>系统环境</td>
+<td>Ubuntu 18.04</td>
+</tr>
+<tr>
+<td>GPU依赖</td>
+<td>Titan Xp或更高，Cuda>=9.0</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>16G+，推荐64G+</td>
+</tr>
+<tr>
+<td>gcc,g++</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>OpenMVS</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>OpenCV</td>
+<td>4.x</td>
+</tr>
+<tr>
+<td>python</td>
+<td>3.6(pyTorch), 2.7(Tensorflow)</td>
+</tr>
+<tr>
+<td>pyTorch</td>
+<td>>=1.0.0</td>
+</tr>
+<tr>
+<td>Tensorflow</td>
+<td>>=1.4.0</td>
+</tr>
+</table>
 
 ## 本系统依赖的环境如下：
 
@@ -38,6 +69,17 @@ sudo apt-get install \
     libqt5opengl5-dev \
     libcgal-dev \
     libcgal-qt5-dev
+```
+
+### [rpclib](https://github.com/qchateau/rpclib)
+
+```sh
+git clone https://github.com/qchateau/rpclib.git
+cd rpclib
+mkdir build && cd build
+cmake ..
+make -j8
+sudo make install
 ```
 
 ### [openMVS](https://github.com/cdcseacave/openMVS)

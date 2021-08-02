@@ -16,16 +16,19 @@ git checkout dev
 
 日志输出位置主要存在于./src/exe/colmap.cc文件中，变量FLAGS_log_dir的值。
 共有三处需要修改。它会被编译进可执行文件中，因此必须在编译前确定完毕。
+
 ## 3. 构建dist_i23d系统
 
 由于dev分支里已经存在构建完成的build文件夹，因此首先删除build文件夹重新构建
 重新新建build文件夹，执行cmake和make命令
 命令类似如下：
+
 ```
 cd dist_i23d
 rm -r build
 mkdir build && cd build
 cmake .. && make -j8
 ```
+
 执行完成后即构建完成
 

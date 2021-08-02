@@ -3,6 +3,7 @@
 系统源码目前托管在两处，分别是章焕学长的私有github仓库和王泽斌学长搭建的gitlab仓库。
 
 以托管在gitlab上的源码为基准，目前共有三个不同版本，分别为
+
 + master分支版本
 + dev分支版本
 + 90服务器版本
@@ -14,6 +15,7 @@ master分支版本为稳定可用的i23d分布式三维重建系统，与章焕�
 ## [dev分支版本](http://8.140.146.21/youweikang/dist_i23d/-/tree/dev)
 
 dev分支版本为稳定可用的i23d分布式三维重建系统，变更如下：
+
 + 集成了D2HC-RMVSNet（可替换原始改造的分布式版openMVS，默认仍然使用openMVS）
 + 增加sampling_based匹配和BA算法（徐军学长的毕业论文）
 + 增加sobel算子的头文件
