@@ -37,6 +37,113 @@ sfm_path=/home/keyepoch/Downloads/i23d/dist_i23d
 
 MVS
 
+run_mvs.sh 字符串拼接方式传入三个参数 斜杠添加问题
+因为原始join方法只能拼接路径，因此不能
+auto_dense_reconstruction.sh
+
+RunImageUndistorter
+
+undistorter.start()
+
+threadpool
+
+UndistortReconstruction
+UndistortCamera
+write sparse
+
+model_converter 输出格式
+
+interfaceColmap
+-i: input file
+-o: output file
+
+denseifyPointCloud
+
+pointCloutFilter 去除不可见点？
+八叉树加快搜索
+大于阈值的都去除
+
+DenseReconstruction
+1. depth map computation
+准备图片 筛选图片（未标定、无效的）
+缩放一次图片（降采样）
+读取分辨率合适的图片
+
+对每个图片，选择所有有用的相邻图片
+两步，1. 图片文件夹中的第一个图片并选择重建深度图的最佳视角，并提取所有相邻图片可见的3D点。
+2.为相关视角选择 nNumViews 个对应视图（如果nNumViews为1，每张图片只选择最佳的视图。构造一个图，顶点是视角，如果互为邻居就用一条边连接起来
+
+选择+筛选
+
+
+构造一个处理队列
+
+1. fuse all depth-maps
+fuse all valid depth-maps in the same 3D point cloud; join points very likely to represent the same 3D point and filter out points blocking the view
+
+find best connected images
+fuse all depth-maps, processing the best connected images first
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## master进程
 
@@ -143,6 +250,17 @@ $DATASET_PATH/$log_folder \
 ### 3.分割图N-cut
 
 ### 4.运行（sfm+MVS)
+
+每三秒 找一个空闲worker
+
+
+
+SfMDataContainer 继承了 TaskDataContainer
+TaskDataContainer 中的虚函数DistributeTask 在 SfMDataContainer 中被重写
+
+
+
+
 
 ### 5.再次三角化
 
