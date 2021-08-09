@@ -143,6 +143,7 @@ fuse all depth-maps, processing the best connected images first
 最后，合并在前面步骤中优化的深度贴图。此过程还包括冗余消除，因为深度贴图容易在多个贴图上具有相同的点。 
 
 网格重建
+Exploiting Visibility Information in Surface Reconstruction to Preserve Weakly Supported Surfaces
 
 delaunay四面体化，
 首先，通过逐点插入，迭代创建现有点云的delaunay三角图。如果要插入的点在它的至少一个视图中不比distInsert像素更接近任何已经插入的点的投影。
