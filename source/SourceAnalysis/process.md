@@ -6,21 +6,9 @@
 
 ## worker进程
 
-系统首先调用worker脚本`run_worker.sh`启动worker进程，脚本如下：
+系统首先调用worker脚本`run_worker.sh`启动worker进程。
 
-```sh
-output_path=/home/keyepoch/Downloads/car/worker/images/
-sfm_path=/home/keyepoch/Downloads/i23d/dist_i23d
- 
-./colmap local_sfm_worker --output_path=$output_path     \
-	--worker_output_path=$output_path \
-	--run_mvs_path=$sfm_path/run_mvs.sh \
-        --worker_cluster_path=$output_path \
-        --SfM_path=$sfm_path
-
-```
-
-此脚本调用了文件colmap.cc中的`RunLocalSfMWorker`函数，参数主要是各种路径。该函数读取完命令行参数后，首先设定日志目录`FLAGS_log_dir`参数。随后构建类IncrementalMapperController，这个类不仅是执行SfM过程，也执行MVS过程。实例化一个`mapper`对象后，将其作为rpc中的server。
+此脚本调用了`RunLocalSfMWorker`函数，参数主要是各种路径。该函数读取完命令行参数后，首先设定日志目录`FLAGS_log_dir`参数。随后构建类IncrementalMapperController，这个类不仅是执行SfM过程，也执行MVS过程。实例化一个`mapper`对象后，将其作为rpc中的server。
 
 这个函数被rpc框架与`“RunSfM”`字符串关联，由master决定在什么时候调用这个函数。
 
@@ -53,7 +41,7 @@ write sparse
 
 model_converter 输出格式
 
-interfaceColmap
+interface
 -i: input file
 -o: output file
 
@@ -192,71 +180,9 @@ $SfM_path/vobtree/vocab_tree_flickr100K_words1M.bin \
 $CONFIG_FILE_PATH
 ```
 
-此脚本初始化路径信息后，调用了`zh_distributed_sfm.sh`脚本，参数主要也是路径（包括数据集路径、config文件路径、sfm运行路径、词汇树路径等）以及每堆张数限制。接下来是`zh_distributed_sfm.sh`脚本的内容：
+此脚本初始化路径信息后，调用了`zh_distributed_sfm.sh`脚本，参数主要也是路径（包括数据集路径、config文件路径、sfm运行路径、词汇树路径等）以及每堆张数限制。此脚本主要调用三个模块：sift特征提取模块、词汇树匹配模块和分布式映射模块。核心来看分布式映射模块。
 
-```sh
-DATASET_PATH=$1
-num_images_ub=$2
-log_folder=$3
-colmap_path=$4
-VOC_TREE_PATH=$5
-CONFIG_FILE_PATH=$6
-# completeness_ratio=$4
-# VOC_TREE_PATH=$5
-# image_overlap=$3
-# max_num_cluster_pairs=$4
-
-#mkdir -p $DATASET_PATH/$log_folder
-
-${colmap_path}/colmap feature_extractor \
---database_path=$DATASET_PATH/database.db \
---image_path=$DATASET_PATH/images \
---SiftExtraction.num_threads=8 \
---SiftExtraction.use_gpu=1 \
---SiftExtraction.gpu_index=0
-
-#  ${colmap_path}/colmap exhaustive_matcher \
-#  --database_path=$DATASET_PATH/database.db \
-# --SiftMatching.num_threads=8 \
-# --SiftMatching.use_gpu=1 \
-# --SiftMatching.gpu_index=0
-
-# Or use vocabulary tree matcher
-${colmap_path}/colmap vocab_tree_matcher \
---database_path=$DATASET_PATH/database.db \
---SiftMatching.num_threads=8 \
---SiftMatching.use_gpu=1 \
---SiftMatching.gpu_index=0 \
---VocabTreeMatching.num_images=30 \
---VocabTreeMatching.num_nearest_neighbors=5 \
---VocabTreeMatching.vocab_tree_path=$VOC_TREE_PATH
-
-${colmap_path}/colmap distributed_mapper \
-$DATASET_PATH/$log_folder \
---database_path=$DATASET_PATH/database.db \
---transfer_images_to_server=1 \
---image_path=$DATASET_PATH/images \
---output_path=$DATASET_PATH/sparse \
---config_file_name=$CONFIG_FILE_PATH \
---num_workers=8 \
---distributed=1 \
---repartition=0 \
---assign_cluster_id=1 \
---write_binary=0 \
---retriangulate=0 \
---final_ba=0 \
---select_tracks_for_bundle_adjustment=1 \
---long_track_length_threshold=10 \
---graph_dir=$DATASET_PATH/$log_folder \
---num_images_ub=$num_images_ub \
---completeness_ratio=0.7 \
---relax_ratio=1.3 \
---cluster_type=NCUT #SPECTRA
-```
-
-此脚本主要调用三个模块：sift特征提取模块、词汇树匹配模块和分布式映射模块。核心来看分布式映射模块。
-
-`distributed_mapper`主要调用了文件colmap.cc中的`RunDistributedMapper`函数，此函数接收的参数较多，以下是参数的含义：
+`distributed_mapper`主要调用了`RunDistributedMapper`函数，此函数接收的参数较多，以下是参数的含义：
 
 
 `RunDistributedMapper`函数接收了参数并存放到option中后，构建了两个类`ReconstructionManager`和`DistributedMapperController`，分别实例化了`reconstruction_manager`和`distributed_mapper`对象，其中`DistributedMapperController`类存放了控制信息，也就是option中的信息。随后启动`distributed_mapper`函数。
