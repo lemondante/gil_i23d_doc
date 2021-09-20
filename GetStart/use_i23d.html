@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>系统使用 &mdash; i23d分布式三维重建系统 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="系统依赖组件" href="../SourceAnalysis/util.html" />
+    <link rel="prev" title="系统构建" href="build_i23d.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> i23d分布式三维重建系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/doc_intro.html">文档简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/intro_new.html">系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/versions.html">系统版本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_i23d.html">系统构建</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">系统使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1. 修改脚本命令路径</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dist-run-sh">1. dist_run.sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-txt">2. config.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-worker-sh">3. run_worker.sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#auto-dense-reconstruction-sh">4. auto_dense_reconstruction.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tmuxworker">2. 使用tmux创建worker会话</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tmux">安装tmux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#worker">创建新的worker会话</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#master">创建新的master会话</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3. 重建结果查看</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/util.html">系统依赖组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/process.html">系统运行流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OldDocs/intro_old.html">Graph Structure from Motion (GraphSfM)(旧版文档v1.0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OldDocs/docker.html">i23d分布式docker安装指南(旧版)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">i23d分布式三维重建系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>系统使用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/GetStart/use_i23d.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>系统使用<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<section id="id2">
+<h2>1. 修改脚本命令路径<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<p>默认配置下有三个脚本和一个config文件需要修改</p>
+<section id="dist-run-sh">
+<h3>1. dist_run.sh<a class="headerlink" href="#dist-run-sh" title="Permalink to this headline"></a></h3>
+<p>需要将Dataset_dir修改为实际数据集目录，并保证下一级有images这一文件夹，装着所有待重建图片
+<strong>注意：路径最后不需要加上斜杠“/”</strong>
+同时修改CONFIG_FILE_PATH为实际config.txt所在位置</p>
+</section>
+<section id="config-txt">
+<h3>2. config.txt<a class="headerlink" href="#config-txt" title="Permalink to this headline"></a></h3>
+<p>将每台电脑的ip及端口写入“config.txt”文件，格式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server_num</span>
+<span class="n">ip1</span> <span class="n">port1</span> <span class="n">dir_images_worker</span>
+<span class="n">ip2</span> <span class="n">port2</span> <span class="n">dir_images_worker</span>
+<span class="o">...</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>其中，第一项为各个worker机器的ip地址，第二项为worker的端口号，第三项为worker机器保存图片数据的目录（也就是master上的图片传到worker的这个目录下）。这个worker目录必须提前建立，否则程序直接退出。</p>
+<p><strong>注意：dir_images_worker路径最后必须加上斜杠“/”，否则openMVS会无法读取到sfm生成的bin文件</strong></p>
+</section>
+<section id="run-worker-sh">
+<h3>3. run_worker.sh<a class="headerlink" href="#run-worker-sh" title="Permalink to this headline"></a></h3>
+<p>原始的build文件夹内没有这个脚本文件，可以自行新建，放入dist_i23d/build/src/exe文件夹中，内容类似如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>output_path=/data3/Dataset/elephant/worker/images/
+sfm_path=../../../../dist_i23d
+ 
+./colmap local_sfm_worker --output_path=$output_path     \
+	--worker_output_path=$output_path \
+	--run_mvs_path=$sfm_path/run_mvs.sh \
+        --worker_cluster_path=$output_path \
+        --SfM_path=$sfm_path
+</pre></div>
+</div>
+<p>其中output_path应与config中的dir_images_worker保持一致，<strong>路径最后同样要添加斜杠“/”</strong>。
+sfm_path即为dist_i23d文件目录</p>
+</section>
+<section id="auto-dense-reconstruction-sh">
+<h3>4. auto_dense_reconstruction.sh<a class="headerlink" href="#auto-dense-reconstruction-sh" title="Permalink to this headline"></a></h3>
+<p>此为使用OpenMVS时需要修改的脚本文件。
+主要修改如下路径：</p>
+<ul class="simple">
+<li><p>mvs所在路径
+mvs_path=./openMVS_build/bin</p></li>
+<li><p>colmap（i23d)所在路径（即dist_i23d/build/src/exe）
+colmap_path=./dist_i23d/build/src/exe</p></li>
+</ul>
+</section>
+</section>
+<section id="tmuxworker">
+<h2>2. 使用tmux创建worker会话<a class="headerlink" href="#tmuxworker" title="Permalink to this headline"></a></h2>
+<section id="tmux">
+<h3>安装tmux<a class="headerlink" href="#tmux" title="Permalink to this headline"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tmux</span>
+</pre></div>
+</div>
+</section>
+<section id="worker">
+<h3>创建新的worker会话<a class="headerlink" href="#worker" title="Permalink to this headline"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">worker</span>
+</pre></div>
+</div>
+<p>进入tmux会话窗口后启动worker进程（<strong>一台主机只能启动一个worker会话</strong>）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">sh</span> <span class="n">run_worker</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</section>
+<section id="master">
+<h3>创建新的master会话<a class="headerlink" href="#master" title="Permalink to this headline"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tmux</span> <span class="n">new</span> <span class="o">-</span><span class="n">s</span> <span class="n">master</span>
+</pre></div>
+</div>
+<p>进入tmux会话窗口后启动master进程</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">sh</span> <span class="n">dist_run</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>等待运行完毕即可。</p>
+</section>
+</section>
+<section id="id3">
+<h2>3. 重建结果查看<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<p>重建结果为obj文件，可放入MeshLab中查看具体的重建效果。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="build_i23d.html" class="btn btn-neutral float-left" title="系统构建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../SourceAnalysis/util.html" class="btn btn-neutral float-right" title="系统依赖组件" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, youweikang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

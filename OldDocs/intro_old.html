@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graph Structure from Motion (GraphSfM)(旧版文档v1.0) &mdash; i23d分布式三维重建系统 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="i23d分布式docker安装指南(旧版)" href="docker.html" />
+    <link rel="prev" title="系统运行流程" href="../SourceAnalysis/process.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> i23d分布式三维重建系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/doc_intro.html">文档简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/intro_new.html">系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/versions.html">系统版本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GetStart/environment.html">环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GetStart/build_i23d.html">系统构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../GetStart/use_i23d.html">系统使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/util.html">系统依赖组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/process.html">系统运行流程</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Graph Structure from Motion (GraphSfM)(旧版文档v1.0)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-graphsfm">1. Overview of GraphSfM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-build">2. How to Build</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required">2.1 Required</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-requirements">Basic Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ceres-solver">ceres-solver</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rpclib">rpclib</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-our-graphsfm">Build our GraphSfM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">3. Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sequential-mode">Sequential Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distributed-mode">Distributed Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segment-large-scale-maps">Segment large scale maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#changelog">ChangeLog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#licence">Licence</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">i23d分布式docker安装指南(旧版)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">i23d分布式三维重建系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Graph Structure from Motion (GraphSfM)(旧版文档v1.0)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/OldDocs/intro_old.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="graph-structure-from-motion-graphsfm-v1-0">
+<h1>Graph Structure from Motion (GraphSfM)(旧版文档v1.0)<a class="headerlink" href="#graph-structure-from-motion-graphsfm-v1-0" title="Permalink to this headline"></a></h1>
+<section id="overview-of-graphsfm">
+<h2>1. Overview of GraphSfM<a class="headerlink" href="#overview-of-graphsfm" title="Permalink to this headline"></a></h2>
+<p>Our Structure from Motion approach, named <strong><code class="docutils literal notranslate"><span class="pre">Graph</span> <span class="pre">Structure</span> <span class="pre">from</span> <span class="pre">Motion</span> <span class="pre">(GraphSfM)</span></code></strong>, is aimed at large scale 3D reconstruction. Besides, we aimed at exploring the computation ability of computer and making SfM easily transferred to distributed system. This work has been refactored, now it is based on <a class="reference external" href="https://github.com/colmap/colmap">COLMAP</a>. We have implemented the distributed version which is based on Map-Reduce architecture.</p>
+<p>In our work, 3D reconstruction is deemed as a <code class="docutils literal notranslate"><span class="pre">divide-and-conquer</span></code> problem. Our graph cluster algorithm divides images into different clusters, while images with high relativity remained in the same group. After the completion of local SfM in all clusters, an elaborate graph initialization and MST construction algorithm is designed to accurately merge clusters, and cope well with drift problems. The two proposed graph-based algorithms make SfM more efficient and robust - the graph cluster algorithm accelerate the SfM step while guarantee the robustness of clusters merging, and the MST construction makes point clouds alignment as accurate as possible. Our approach can reconstruct large scale data-set in one single machine with very high accuracy and efficiency.</p>
+<p>If you use this project for your research, please cite:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@misc</span><span class="p">{</span><span class="n">chen2019graphbased</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">Graph</span><span class="o">-</span><span class="n">Based</span> <span class="n">Parallel</span> <span class="n">Large</span> <span class="n">Scale</span> <span class="n">Structure</span> <span class="kn">from</span> <span class="nn">Motion</span><span class="p">},</span>
+    <span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Yu</span> <span class="n">Chen</span> <span class="ow">and</span> <span class="n">Shuhan</span> <span class="n">Shen</span> <span class="ow">and</span> <span class="n">Yisong</span> <span class="n">Chen</span> <span class="ow">and</span> <span class="n">Guoping</span> <span class="n">Wang</span><span class="p">},</span>
+    <span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2019</span><span class="p">},</span>
+    <span class="n">eprint</span><span class="o">=</span><span class="p">{</span><span class="mf">1912.10659</span><span class="p">},</span>
+    <span class="n">archivePrefix</span><span class="o">=</span><span class="p">{</span><span class="n">arXiv</span><span class="p">},</span>
+    <span class="n">primaryClass</span><span class="o">=</span><span class="p">{</span><span class="n">cs</span><span class="o">.</span><span class="n">CV</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">@inproceedings</span><span class="p">{</span><span class="n">schoenberger2016sfm</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Sch</span>\<span class="s2">&quot;</span><span class="si">{o}</span><span class="s2">nberger, Johannes Lutz and Frahm, Jan-Michael},</span>
+    <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">Structure</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">Motion</span> <span class="n">Revisited</span><span class="p">},</span>
+    <span class="n">booktitle</span><span class="o">=</span><span class="p">{</span><span class="n">Conference</span> <span class="n">on</span> <span class="n">Computer</span> <span class="n">Vision</span> <span class="ow">and</span> <span class="n">Pattern</span> <span class="n">Recognition</span> <span class="p">(</span><span class="n">CVPR</span><span class="p">)},</span>
+    <span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2016</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-build">
+<h2>2. How to Build<a class="headerlink" href="#how-to-build" title="Permalink to this headline"></a></h2>
+<section id="required">
+<h3>2.1 Required<a class="headerlink" href="#required" title="Permalink to this headline"></a></h3>
+<section id="basic-requirements">
+<h4>Basic Requirements<a class="headerlink" href="#basic-requirements" title="Permalink to this headline"></a></h4>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo apt-get install <span class="se">\</span>
+    git <span class="se">\</span>
+    cmake <span class="se">\</span>
+    build-essential <span class="se">\</span>
+    libboost-program-options-dev <span class="se">\</span>
+    libboost-filesystem-dev <span class="se">\</span>
+    libboost-graph-dev <span class="se">\</span>
+    libboost-regex-dev <span class="se">\</span>
+    libboost-system-dev <span class="se">\</span>
+    libboost-test-dev <span class="se">\</span>
+    libeigen3-dev <span class="se">\</span>
+    libsuitesparse-dev <span class="se">\</span>
+    libfreeimage-dev <span class="se">\</span>
+    libgoogle-glog-dev <span class="se">\</span>
+    libgflags-dev <span class="se">\</span>
+    libglew-dev <span class="se">\</span>
+    qtbase5-dev <span class="se">\</span>
+    libqt5opengl5-dev <span class="se">\</span>
+    libcgal-dev <span class="se">\</span>
+    libcgal-qt5-dev
+</pre></div>
+</div>
+</section>
+<section id="ceres-solver">
+<h4><a class="reference external" href="#">ceres-solver</a><a class="headerlink" href="#ceres-solver" title="Permalink to this headline"></a></h4>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libatlas-base-dev libsuitesparse-dev
+git clone https://ceres-solver.googlesource.com/ceres-solver
+<span class="nb">cd</span> ceres-solver
+git checkout <span class="k">$(</span>git describe --tags<span class="k">)</span> <span class="c1"># Checkout the latest release</span>
+mkdir build
+<span class="nb">cd</span> build
+cmake .. -DBUILD_TESTING<span class="o">=</span>OFF -DBUILD_EXAMPLES<span class="o">=</span>OFF
+make
+sudo make install
+</pre></div>
+</div>
+</section>
+<section id="rpclib">
+<h4><a class="reference external" href="https://github.com/qchateau/rpclib">rpclib</a><a class="headerlink" href="#rpclib" title="Permalink to this headline"></a></h4>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/qchateau/rpclib.git
+<span class="nb">cd</span> rpclib
+mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
+cmake ..
+make -j8
+sudo make install
+</pre></div>
+</div>
+</section>
+<section id="build-our-graphsfm">
+<h4>Build our GraphSfM<a class="headerlink" href="#build-our-graphsfm" title="Permalink to this headline"></a></h4>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/AIBluefisher/GraphSfM.git
+<span class="nb">cd</span> GraphSfM
+mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
+cmake .. <span class="o">&amp;&amp;</span> make -j8
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="usage">
+<h2>3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<p>As our algorithm is not integrated in the <code class="docutils literal notranslate"><span class="pre">GUI</span></code> of <code class="docutils literal notranslate"><span class="pre">COLMAP</span></code>, we offer a script to run the
+distributed SfM (We hope there is anyone that is interested in integrating this pipeline into the GUI).</p>
+<section id="sequential-mode">
+<h3>Sequential Mode<a class="headerlink" href="#sequential-mode" title="Permalink to this headline"></a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo chmod +x scripts/shell/distributed_sfm.sh
+./distributed_sfm.sh <span class="nv">$image_dir</span> <span class="nv">$num_images_ub</span> <span class="nv">$log_folder</span> <span class="nv">$completeness_ratio</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$image_dir</span></code>:   The directory that stores images</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$num_images_ub</span></code>: The maximum image number in each cluster. For example, <code class="docutils literal notranslate"><span class="pre">80~120</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$log_folder</span></code>:  The directory that stores the logs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$completeness_ratio</span></code>: The ratio that measure the repeatitive rate of adjacent clusters.</p></li>
+</ul>
+</section>
+<section id="distributed-mode">
+<h3>Distributed Mode<a class="headerlink" href="#distributed-mode" title="Permalink to this headline"></a></h3>
+<p>(1) At first, we need to establish the server for every worker:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> build/src/exe
+./colmap local_sfm_worker --output_path<span class="o">=</span><span class="nv">$output_path</span>
+</pre></div>
+</div>
+<p>(2) Then, the ip and port for every server should be written in a <code class="docutils literal notranslate"><span class="pre">config.txt</span></code> file.
+The file format should follow:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server_num</span>
+<span class="n">ip1</span> <span class="n">port1</span> <span class="n">image_path1</span>
+<span class="n">ip2</span> <span class="n">port2</span> <span class="n">image_path2</span>
+<span class="o">...</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>(3) At last, start our master</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> GraphSfM_PATH/scripts/shell
+<span class="c1"># The project folder must contain a folder &quot;images&quot; with all the images.</span>
+<span class="nv">DATASET_PATH</span><span class="o">=</span>/path/to/project
+<span class="nv">CONFIG_FILE_PATH</span><span class="o">=</span>/path_to_config_file
+<span class="nv">num_images_ub</span><span class="o">=</span><span class="m">100</span>
+<span class="nv">log_folder</span><span class="o">=</span>/path_to_log_dir
+
+./distributed_sfm.sh <span class="nv">$DATASET_PATH</span> <span class="nv">$num_images_ub</span> <span class="nv">$log_folder</span> <span class="nv">$CONFIG_FILE_PATH</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">distributed_sfm.sh</span></code> actually executes the following command in SfM module:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>/home/chenyu/Projects/Disco/build/src/exe/colmap distributed_mapper <span class="se">\</span>
+<span class="nv">$DATASET_PATH</span>/<span class="nv">$log_folder</span> <span class="se">\</span>
+--database_path<span class="o">=</span><span class="nv">$DATASET_PATH</span>/database.db <span class="se">\</span>
+--transfer_images_to_server<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--image_path<span class="o">=</span><span class="nv">$DATASET_PATH</span>/images <span class="se">\</span>
+--output_path<span class="o">=</span><span class="nv">$DATASET_PATH</span>/<span class="nv">$log_folder</span> <span class="se">\</span>
+--config_file_name<span class="o">=</span><span class="nv">$CONFIG_FILE_PATH</span>/config.txt <span class="se">\</span>
+--num_workers<span class="o">=</span><span class="m">8</span> <span class="se">\</span>
+--distributed<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--repartition<span class="o">=</span><span class="m">0</span> <span class="se">\</span>
+--assign_cluster_id<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--write_binary<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--retriangulate<span class="o">=</span><span class="m">0</span> <span class="se">\</span>
+--final_ba<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--select_tracks_for_bundle_adjustment<span class="o">=</span><span class="m">1</span> <span class="se">\</span>
+--long_track_length_threshold<span class="o">=</span><span class="m">10</span> <span class="se">\</span>
+--graph_dir<span class="o">=</span><span class="nv">$DATASET_PATH</span>/<span class="nv">$log_folder</span> <span class="se">\</span>
+--num_images_ub<span class="o">=</span><span class="nv">$num_images_ub</span> <span class="se">\</span>
+--completeness_ratio<span class="o">=</span><span class="m">0</span>.7 <span class="se">\</span>
+--relax_ratio<span class="o">=</span><span class="m">1</span>.3 <span class="se">\</span>
+--cluster_type<span class="o">=</span>NCUT <span class="c1">#SPECTRA</span>
+</pre></div>
+</div>
+<p>The parameters need to be reset for different purpose:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--transfer_images_to_server</span></code>: The option decides whether to transfer images that are stored on
+master’s disk to workers’ disks. If we want to execute a further MVS process, we want this option to be set to <code class="docutils literal notranslate"><span class="pre">1</span></code>, because each worker that execute MVS needs to access the raw images.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--distributed</span></code>: This option decides the SfM module runs in distributed mode or sequential mode.
+For example, if we just have one computer, we should set it to <code class="docutils literal notranslate"><span class="pre">0</span></code>, then SfM would run in sequential mode and allows you to reconstruct large scale images on a single computer. If we set it to <code class="docutils literal notranslate"><span class="pre">1</span></code>, we must ensure the <code class="docutils literal notranslate"><span class="pre">--config_file_name</span></code> option is valid, so that we we run SfM among
+a lot of computers, which in a really distributed mode.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">assign_cluster_id</span></code>: We use this option to indicate the program to assign each image with a
+<code class="docutils literal notranslate"><span class="pre">cluster_id</span></code>, if we divide images into several clusters. This option allows us to render different
+image poses that are clustered in different clusters by different colors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write_binary</span></code>: This option indicates to save the SfM results in text format or in binary format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">final_ba</span></code>: This option indicates whether to perform a final bundle adjustment after merging all
+local maps. As a very large scale map requires much time to optimize scene structures and camera poses, users should tune this option by their need.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">select_tracks_for_bundle_adjustment</span></code>: As the final bundle adjustment requires too much time, we can select good tracks to optimize and achieves a comparable accuracy as full bundle adjustment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">long_track_length_threshold</span></code>: The maximum track length when selects good tracks for bundle adjustment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_images_ub</span></code>: The maximum number of images in each cluster.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">completeness_ratio</span></code>: This option indicate the overlapping between clusters. 0.5~0.7 is enough
+in practice.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_type</span></code>: This option decides which cluster method we choose for image clustering. We support <code class="docutils literal notranslate"><span class="pre">NCut</span></code> and <code class="docutils literal notranslate"><span class="pre">Spectral</span></code> Clustering. <code class="docutils literal notranslate"><span class="pre">Spectra</span></code> clustering is more accurate than <code class="docutils literal notranslate"><span class="pre">NCut</span></code> but
+it would be slow if we want to divide images into many clusters, as it needs much time to compute
+eigen vectors.</p></li>
+</ul>
+<p>If succeed, camera poses and sparse points should be included in <code class="docutils literal notranslate"><span class="pre">$DATASET/Master</span></code> folder, you can use COLMAP’s GUI to
+import it and show the visual result:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./build/src/exe/colmap gui
+</pre></div>
+</div>
+<p>For small scale reconstruction, you can set the <code class="docutils literal notranslate"><span class="pre">$num_images_ub</span></code> equal to the number of images, the program would just use the incremental SfM pipeline of <a class="reference external" href="https://github.com/colmap/colmap">COLMAP</a>.</p>
+<p>For large scale reconstruction, our <code class="docutils literal notranslate"><span class="pre">GraphSfM</span></code> is highly recommended, these parameters should be tuned carefully: larger <code class="docutils literal notranslate"><span class="pre">$num_images_ub</span></code> and <code class="docutils literal notranslate"><span class="pre">$completeness_ratio</span></code> can make reconstruction more robust, but also may lead to low efficiency and even degenerate to incremental one.</p>
+</section>
+<section id="segment-large-scale-maps">
+<h3>Segment large scale maps<a class="headerlink" href="#segment-large-scale-maps" title="Permalink to this headline"></a></h3>
+<p>In some cases where we have a very large scale map, such that a latter Multi-View Stereo becomes
+infeasible because of memory limitation. We can use the <code class="docutils literal notranslate"><span class="pre">point_cloud_segmenter</span></code> to segment original
+map that is stored in colmap format into multiple small maps.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./build/src/exe/colmap point_cloud_segmenter <span class="se">\</span>
+--colmap_data_path<span class="o">=</span>path_to_colmap_data <span class="se">\ </span>
+--output_path<span class="o">=</span>path_to_store_small_maps <span class="se">\</span>
+--max_image_num<span class="o">=</span>max_number_image_for_small_map <span class="se">\</span>
+--write_binary<span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>Before running this command, make sure <code class="docutils literal notranslate"><span class="pre">path_to_colmap_data</span></code> contains <code class="docutils literal notranslate"><span class="pre">images.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">cameras.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">points3D.txt</span></code> or <code class="docutils literal notranslate"><span class="pre">images.bin</span></code>, <code class="docutils literal notranslate"><span class="pre">cameras.bin</span></code>, <code class="docutils literal notranslate"><span class="pre">points3D.bin</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_image_num</span></code>: As colmap data includes images data, where store all registered images’ data. We
+limit the image number of each small map, and use this parameter to segment large maps. Though it’s better to use the number of point clouds in practice, we haven’t release the related implementation and we will enhance this helper further.</p></li>
+<li><p>‘write_binary<code class="docutils literal notranslate"><span class="pre">:</span> <span class="pre">set</span> <span class="pre">to</span> </code>1<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">save</span> <span class="pre">colmap</span> <span class="pre">data</span> <span class="pre">in</span> <span class="pre">binary</span> <span class="pre">format,</span> <span class="pre">or</span> <span class="pre">set</span> <span class="pre">to</span></code>0` to save colmap data in text format.</p></li>
+</ul>
+</section>
+</section>
+<section id="changelog">
+<h2>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>2020.04.11</p>
+<ul>
+<li><p>Interface for extracting largest connected component in graph implementation.</p></li>
+<li><p>Merge largest connected component in SfMAligner.</p></li>
+<li><p>Command line helper for merging multiple local maps.</p></li>
+<li><p>Command line helper for segmenting large scale map into several sub-maps.</p></li>
+</ul>
+</li>
+<li><p>2020.04.10</p>
+<ul>
+<li><p>Spectral clustering for image clustering.</p></li>
+<li><p>Select good tracks for final bundle adjustment.</p></li>
+<li><p>Image transfer from master to workers.</p></li>
+<li><p>Extract largest connected component for Structure-from-Motion.</p></li>
+</ul>
+</li>
+<li><p>2020.03.06</p>
+<ul>
+<li><p>Assign different colors for images in different clusters.</p></li>
+<li><p>Support rendering image poses by different colors in ui.</p></li>
+<li><p>map reduce implementation for distributed Structure-from-Motion.</p></li>
+</ul>
+</li>
+<li><p>2019.11.26</p>
+<ul>
+<li><p>Image Clustering algorithms: NCut, Spectral Clustering (Updated in latest version).</p></li>
+<li><p>Graph-based sub-reconstruction Merging algorithm.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="licence">
+<h2>Licence<a class="headerlink" href="#licence" title="Permalink to this headline"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BSD</span> <span class="mi">3</span><span class="o">-</span><span class="n">Clause</span> <span class="n">License</span>
+
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">陈煜</span>
+<span class="n">All</span> <span class="n">rights</span> <span class="n">reserved</span><span class="o">.</span>
+
+<span class="n">Redistribution</span> <span class="ow">and</span> <span class="n">use</span> <span class="ow">in</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">binary</span> <span class="n">forms</span><span class="p">,</span> <span class="k">with</span> <span class="ow">or</span> <span class="n">without</span>
+<span class="n">modification</span><span class="p">,</span> <span class="n">are</span> <span class="n">permitted</span> <span class="n">provided</span> <span class="n">that</span> <span class="n">the</span> <span class="n">following</span> <span class="n">conditions</span> <span class="n">are</span> <span class="n">met</span><span class="p">:</span>
+
+<span class="o">*</span> <span class="n">Redistributions</span> <span class="n">of</span> <span class="n">source</span> <span class="n">code</span> <span class="n">must</span> <span class="n">retain</span> <span class="n">the</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span><span class="p">,</span> <span class="n">this</span>
+  <span class="nb">list</span> <span class="n">of</span> <span class="n">conditions</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">following</span> <span class="n">disclaimer</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">Redistributions</span> <span class="ow">in</span> <span class="n">binary</span> <span class="n">form</span> <span class="n">must</span> <span class="n">reproduce</span> <span class="n">the</span> <span class="n">above</span> <span class="n">copyright</span> <span class="n">notice</span><span class="p">,</span>
+  <span class="n">this</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">conditions</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">following</span> <span class="n">disclaimer</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">documentation</span>
+  <span class="ow">and</span><span class="o">/</span><span class="ow">or</span> <span class="n">other</span> <span class="n">materials</span> <span class="n">provided</span> <span class="k">with</span> <span class="n">the</span> <span class="n">distribution</span><span class="o">.</span>
+
+<span class="o">*</span> <span class="n">Neither</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">copyright</span> <span class="n">holder</span> <span class="n">nor</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">its</span>
+  <span class="n">contributors</span> <span class="n">may</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">endorse</span> <span class="ow">or</span> <span class="n">promote</span> <span class="n">products</span> <span class="n">derived</span> <span class="kn">from</span>
+  <span class="nn">this</span> <span class="n">software</span> <span class="n">without</span> <span class="n">specific</span> <span class="n">prior</span> <span class="n">written</span> <span class="n">permission</span><span class="o">.</span>
+
+<span class="n">THIS</span> <span class="n">SOFTWARE</span> <span class="n">IS</span> <span class="n">PROVIDED</span> <span class="n">BY</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDERS</span> <span class="n">AND</span> <span class="n">CONTRIBUTORS</span> <span class="s2">&quot;AS IS&quot;</span>
+<span class="n">AND</span> <span class="n">ANY</span> <span class="n">EXPRESS</span> <span class="n">OR</span> <span class="n">IMPLIED</span> <span class="n">WARRANTIES</span><span class="p">,</span> <span class="n">INCLUDING</span><span class="p">,</span> <span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span><span class="p">,</span> <span class="n">THE</span>
+<span class="n">IMPLIED</span> <span class="n">WARRANTIES</span> <span class="n">OF</span> <span class="n">MERCHANTABILITY</span> <span class="n">AND</span> <span class="n">FITNESS</span> <span class="n">FOR</span> <span class="n">A</span> <span class="n">PARTICULAR</span> <span class="n">PURPOSE</span> <span class="n">ARE</span>
+<span class="n">DISCLAIMED</span><span class="o">.</span> <span class="n">IN</span> <span class="n">NO</span> <span class="n">EVENT</span> <span class="n">SHALL</span> <span class="n">THE</span> <span class="n">COPYRIGHT</span> <span class="n">HOLDER</span> <span class="n">OR</span> <span class="n">CONTRIBUTORS</span> <span class="n">BE</span> <span class="n">LIABLE</span>
+<span class="n">FOR</span> <span class="n">ANY</span> <span class="n">DIRECT</span><span class="p">,</span> <span class="n">INDIRECT</span><span class="p">,</span> <span class="n">INCIDENTAL</span><span class="p">,</span> <span class="n">SPECIAL</span><span class="p">,</span> <span class="n">EXEMPLARY</span><span class="p">,</span> <span class="n">OR</span> <span class="n">CONSEQUENTIAL</span>
+<span class="n">DAMAGES</span> <span class="p">(</span><span class="n">INCLUDING</span><span class="p">,</span> <span class="n">BUT</span> <span class="n">NOT</span> <span class="n">LIMITED</span> <span class="n">TO</span><span class="p">,</span> <span class="n">PROCUREMENT</span> <span class="n">OF</span> <span class="n">SUBSTITUTE</span> <span class="n">GOODS</span> <span class="n">OR</span>
+<span class="n">SERVICES</span><span class="p">;</span> <span class="n">LOSS</span> <span class="n">OF</span> <span class="n">USE</span><span class="p">,</span> <span class="n">DATA</span><span class="p">,</span> <span class="n">OR</span> <span class="n">PROFITS</span><span class="p">;</span> <span class="n">OR</span> <span class="n">BUSINESS</span> <span class="n">INTERRUPTION</span><span class="p">)</span> <span class="n">HOWEVER</span>
+<span class="n">CAUSED</span> <span class="n">AND</span> <span class="n">ON</span> <span class="n">ANY</span> <span class="n">THEORY</span> <span class="n">OF</span> <span class="n">LIABILITY</span><span class="p">,</span> <span class="n">WHETHER</span> <span class="n">IN</span> <span class="n">CONTRACT</span><span class="p">,</span> <span class="n">STRICT</span> <span class="n">LIABILITY</span><span class="p">,</span>
+<span class="n">OR</span> <span class="n">TORT</span> <span class="p">(</span><span class="n">INCLUDING</span> <span class="n">NEGLIGENCE</span> <span class="n">OR</span> <span class="n">OTHERWISE</span><span class="p">)</span> <span class="n">ARISING</span> <span class="n">IN</span> <span class="n">ANY</span> <span class="n">WAY</span> <span class="n">OUT</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">USE</span>
+<span class="n">OF</span> <span class="n">THIS</span> <span class="n">SOFTWARE</span><span class="p">,</span> <span class="n">EVEN</span> <span class="n">IF</span> <span class="n">ADVISED</span> <span class="n">OF</span> <span class="n">THE</span> <span class="n">POSSIBILITY</span> <span class="n">OF</span> <span class="n">SUCH</span> <span class="n">DAMAGE</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../SourceAnalysis/process.html" class="btn btn-neutral float-left" title="系统运行流程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="docker.html" class="btn btn-neutral float-right" title="i23d分布式docker安装指南(旧版)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, youweikang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

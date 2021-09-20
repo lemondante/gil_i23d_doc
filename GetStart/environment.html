@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>环境配置 &mdash; i23d分布式三维重建系统 1.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="系统构建" href="build_i23d.html" />
+    <link rel="prev" title="系统版本" href="../BasicIntro/versions.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> i23d分布式三维重建系统
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目录:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/doc_intro.html">文档简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/intro_new.html">系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../BasicIntro/versions.html">系统版本</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">环境配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">配置要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">本系统依赖的环境如下：</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">基础环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpclib">rpclib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#openmvs">openMVS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_i23d.html">系统构建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use_i23d.html">系统使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/util.html">系统依赖组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../SourceAnalysis/process.html">系统运行流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OldDocs/intro_old.html">Graph Structure from Motion (GraphSfM)(旧版文档v1.0)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../OldDocs/docker.html">i23d分布式docker安装指南(旧版)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">i23d分布式三维重建系统</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>环境配置</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/GetStart/environment.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>环境配置<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h1>
+<section id="id2">
+<h2>配置要求<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<table>
+<tr>
+<td>环境</td>
+<td>要求</td>
+</tr>
+<tr>
+<td>系统环境</td>
+<td>Ubuntu 18.04</td>
+</tr>
+<tr>
+<td>GPU依赖</td>
+<td>Titan Xp或更高，Cuda>=9.0</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>16G+，推荐64G+</td>
+</tr>
+<tr>
+<td>gcc,g++</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>OpenMVS</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>OpenCV</td>
+<td>4.x</td>
+</tr>
+<tr>
+<td>python</td>
+<td>3.6(pyTorch), 2.7(Tensorflow)</td>
+</tr>
+<tr>
+<td>pyTorch</td>
+<td>>=1.0.0</td>
+</tr>
+<tr>
+<td>Tensorflow</td>
+<td>>=1.4.0</td>
+</tr>
+</table></section>
+<section id="id3">
+<h2>本系统依赖的环境如下：<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<section id="id4">
+<h3>基础环境<a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> \
+    <span class="n">git</span> \
+    <span class="n">cmake</span> \
+    <span class="n">build</span><span class="o">-</span><span class="n">essential</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">program</span><span class="o">-</span><span class="n">options</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">filesystem</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">graph</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">regex</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libboost</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libeigen3</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libsuitesparse</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libfreeimage</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgoogle</span><span class="o">-</span><span class="n">glog</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libgflags</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libglew</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">qtbase5</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libqt5opengl5</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcgal</span><span class="o">-</span><span class="n">dev</span> \
+    <span class="n">libcgal</span><span class="o">-</span><span class="n">qt5</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+</section>
+<section id="rpclib">
+<h3><a class="reference external" href="https://github.com/qchateau/rpclib">rpclib</a><a class="headerlink" href="#rpclib" title="Permalink to this headline"></a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/qchateau/rpclib.git
+<span class="nb">cd</span> rpclib
+mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
+cmake ..
+make -j8
+sudo make install
+</pre></div>
+</div>
+</section>
+<section id="openmvs">
+<h3><a class="reference external" href="https://github.com/cdcseacave/openMVS">openMVS</a><a class="headerlink" href="#openmvs" title="Permalink to this headline"></a></h3>
+<p>openMVS源码必须使用90服务器上改造后的源码，<strong>原始github上的不能够读取分布式sfm的结果</strong>。
+安装openMVS依赖库包括：</p>
+<ul class="simple">
+<li><p>Eigen</p></li>
+<li><p>Boost</p></li>
+<li><p>OpenCV</p></li>
+<li><p>CGAL</p></li>
+<li><p>VCGLib</p></li>
+<li><p>Ceres</p></li>
+<li><p>GLFW3
+虽然源码不同，但是安装仍可参考它的build说明。
+其中ceres-solver与build说明不同，不可编译默认分支的ceres-solver，否则报如下错误：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">trust_region_minimizer</span><span class="o">.</span><span class="n">cc</span><span class="p">:</span><span class="mi">91</span><span class="p">]</span> <span class="n">Terminating</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">consecutive</span> <span class="n">invalid</span> <span class="n">steps</span> <span class="n">more</span> <span class="n">than</span> <span class="n">Solver</span><span class="p">::</span><span class="n">Options</span><span class="p">::</span><span class="n">max_num_</span>
+<span class="n">consecutive_invalid_steps</span><span class="p">:</span> <span class="mi">5</span>  
+</pre></div>
+</div>
+<p>必须切换为1.14.x版本再进行编译。</p>
+<p><strong>也可直接使用以下脚本命令一键部署环境。</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+#Prepare and empty machine for building:
+sudo apt-get update -qq &amp;&amp; sudo apt-get install -qq
+sudo apt-get -y install git cmake libpng-dev libjpeg-dev libtiff-dev libglu1-mesa-dev
+main_path=`pwd`
+echo &quot;main_path=$main_path&quot;
+
+#Eigen (Required)
+git clone https://gitlab.com/libeigen/eigen.git --branch 3.2
+mkdir eigen_build &amp;&amp; cd eigen_build
+cmake . ../eigen
+make &amp;&amp; sudo make install
+cd ..
+
+#Boost (Required)
+sudo apt-get -y install libboost-iostreams-dev libboost-program-options-dev libboost-system-dev libboost-serialization-dev
+
+#OpenCV (Required)
+sudo apt-get -y install libopencv-dev
+
+#CGAL (Required)
+sudo apt-get -y install libcgal-dev libcgal-qt5-dev
+
+#VCGLib (Required)
+git clone https://github.com/cdcseacave/VCG.git vcglib
+
+#Ceres (Optional)
+sudo apt-get -y install libatlas-base-dev libsuitesparse-dev
+git clone https://ceres-solver.googlesource.com/ceres-solver ceres-solver
+cd ceres-solver
+git checkout 1.14.x
+cd ..
+mkdir ceres_build &amp;&amp; cd ceres_build
+cmake . ../ceres-solver/ -DMINIGLOG=ON -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF
+make -j2 &amp;&amp; sudo make install
+cd ..
+
+#GLFW3 (Optional)
+sudo apt-get -y install freeglut3-dev libglew-dev libglfw3-dev
+</pre></div>
+</div>
+<p><strong>在同一级目录下放入90服务器上的openMVS代码，并执行如下编译操作：</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">openMVS_build</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">openMVS_build</span>
+<span class="n">cmake</span> <span class="o">.</span> <span class="o">../</span><span class="n">openMVS</span> <span class="o">-</span><span class="n">DCMAKE_BUILD_TYPE</span><span class="o">=</span><span class="n">Release</span> <span class="o">-</span><span class="n">DVCG_ROOT</span><span class="o">=</span><span class="s2">&quot;$main_path/vcglib&quot;</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">j2</span> <span class="o">&amp;&amp;</span> <span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>此时运行环境配置完成。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../BasicIntro/versions.html" class="btn btn-neutral float-left" title="系统版本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="build_i23d.html" class="btn btn-neutral float-right" title="系统构建" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, youweikang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
