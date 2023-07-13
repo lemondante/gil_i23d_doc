@@ -7,17 +7,19 @@ i23d分布式三维重建系统
 ====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 目录:
 
    ./BasicIntro/doc_intro.md
    ./BasicIntro/intro_new.md
    ./BasicIntro/versions.md
+   ./BasicIntro/servers_info.md
    ./GetStart/environment.md
    ./GetStart/build_i23d.md
    ./GetStart/use_i23d.md
    ./SourceAnalysis/util.md
    ./SourceAnalysis/process.md
+   ./SourceAnalysis/entries.md
    ./OldDocs/intro_old.md
    ./OldDocs/docker.md
 

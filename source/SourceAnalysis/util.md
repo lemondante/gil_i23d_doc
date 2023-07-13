@@ -40,3 +40,7 @@ rpclib是一个开源的c++RPC（Remote Procedure Call）库。目的是在maste
 ## ceres-solver运算库
 
 google开源的c++运算库，用于求解优化问题。
+
+## PBA（Parallel BA）库
+
+并行BA（捆绑调整）库。论文参见[*Multicore Bundle Adjustment*](https://ieeexplore.ieee.org/abstract/document/5995552)
